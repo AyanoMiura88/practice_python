@@ -228,16 +228,16 @@ some_list = [1, 2, 3, 4, 5]
 #     print(i,v)
 
 # zip関数
-days = ["Mon","Tue","Wen"]
-fruits = ["apple","banana","orange"]
-drinks = ["coffee","tea","beer"]
+days = ["Mon", "Tue", "Wen"]
+fruits = ["apple", "banana", "orange"]
+drinks = ["coffee", "tea", "beer"]
 # for i in range(len(days)):
 #     print(days[i], fruits[i], drinks[i])
 
 # for day, fruit, drink in zip(days,fruits,drinks):
 #     print(day,fruit,drink)
 
-# dict for 
+# dict for
 d = {"x": 100, "y": 200}
 # d.items() タプルで帰ってくる→アンパッキングで値が変数に入る
 # for k,v in d.items():
@@ -246,14 +246,79 @@ d = {"x": 100, "y": 200}
 # 関数
 def say():
     return "hi"
-res = say()
-print(res)
 
-def what(color):
-    print(color)
-what("red")
+res = say()
+# print(res)
+
+# def what(color):
+    # print(color)
+
+# what("red")
 # 数値の型だけど文字列なども入れられてしまう
+
+
+# デコレータ すでにある関数を変更することなく機能追加・変更ができる
+def print_info(func):
+    def wrapper(*args,**kwargs):
+      print("start")
+      result = func(*args,**kwargs)
+      print("end")
+      return result
+    return wrapper
+
+@print_info
 def add_num(a: int, b: int) -> int:
     return a + b
-res = add_num("a","b")
-print(res)
+
+# r = add_num(10, 20)
+# f = print_info(add_num)
+# r = f(10, 20)
+# print(r)
+
+
+# res = add_num(10, 20)
+# print(res)
+
+
+# def menu(entree, drink, dessert):
+#     print(entree)
+#     print(drink)
+#     print(dessert)
+# menu(dessert="ice", entree="beef", drink="beer")
+
+
+# クロージャ 中の関数の変数を使用したいとき
+def circle_area_func(pi):
+    def circle_area(radius):
+        return pi * radius * radius
+    return circle_area
+
+ca1 = circle_area_func(3.14)
+ca2 = circle_area_func(3.141592)
+# print(ca1(10))
+# print(ca2(10))
+
+# ラムダ関数 = 無名関数 少ない行の関数などに使用
+l = ["mon","tue","Wen"]
+def change_words(words, func):
+    for word in words:
+        print(func(word))
+
+# sample_func = lambda word: word.capitalize()
+# change_words(l, sample_func)
+# change_words(l, lambda word: word.capitalize())
+# change_words(l, lambda word: word.lower())
+
+# ジェネレータ yield+nextで一つずつ処理をする
+# l = ["Good morning", "Good afternoon", "Good night"]
+# for i in l:
+#     print(i)
+# ↓
+def greeting():
+    yield "Good morning"
+    yield "Good afternoon"
+    yield "Good night"
+
+g = greeting()
+print(next(g))
+print(next(g))
